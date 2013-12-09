@@ -14,6 +14,7 @@ void loop()
 {
 
   int val = analogRead(sensePin);
+  Serial.print(ledLevel); 
   //delay(1000);
   
   //val =  constrain(val, 500, 200);
@@ -21,19 +22,13 @@ void loop()
 
   //Serial.println(analogRead(sensePin));
   //analogWrite(ledPin, ledLevel);
+  /*
   delay(200);
   
   if(val > 500)
   {
    delay(1000);
-    /*while(ledLevel <= 255)
-    {
-      
-      analogWrite(ledPin, ledLevel);
-      delay(50);
-      
-      ledLevel += 21;
-    } */
+
     for (ledLevel;ledLevel < 255;ledLevel = ledLevel + 21){
       analogWrite(ledPin,ledLevel);
       delay(50);
@@ -41,18 +36,38 @@ void loop()
   }
   else
   {
-    /*
-    while(ledLevel >= 0)
-    {
-      delay(50);
-      analogWrite(ledPin,ledLevel);
-      ledLevel -= 21;
-    }*/
+
     
     for (ledLevel;ledLevel >= 0;ledLevel = ledLevel - 21){
       analogWrite(ledPin,ledLevel);
       delay(50);
     }
+  }*/
+  if (val > 500)
+  {
+    if (ledLevel >= 0) 
+    {
+      while(ledLevel <= 255)
+      {
+        ledLevel += 5;
+        analogWrite(ledPin,ledLevel);
+        delay(50);
+      }
+    }
+    //ledLevel = 255;
+  }
+  else{
+    
+    //if (ledLevel <= 255) 
+    //{
+      while(ledLevel >= 0)
+      {
+        ledLevel -= 5;
+        analogWrite(ledPin,ledLevel);
+        delay(50);
+      }
+   // }
+    //ledLevel = 0;
   }
 }
   
