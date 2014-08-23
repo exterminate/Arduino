@@ -1,73 +1,38 @@
 int sensePin = 0;
-int ledPin = 9;
-int ledLevel = 0;
-
+int led = 9;
+int brightness = 0;
+int fadeAmount = 0;
+ 
 void setup()
 {
   analogReference(DEFAULT);//isn't necessary
-  pinMode(ledPin,OUTPUT);
-  //Serial.begin(9600);
+  pinMode(led,OUTPUT);
+  Serial.begin(9600);
 }
-
-
+ 
+ 
 void loop()
 {
-
+  Serial.println(analogRead(sensePin));
   int val = analogRead(sensePin);
-  Serial.print(ledLevel); 
-  //delay(1000);
-  
-  //val =  constrain(val, 500, 200);
-  //int ledLevel = map(val, 500, 200, 255, 0); // the variable, min sense, max sense, max output, min output
-
-  //Serial.println(analogRead(sensePin));
-  //analogWrite(ledPin, ledLevel);
-  /*
-  delay(200);
-  
-  if(val > 500)
+  if (val < 900)
   {
-   delay(1000);
-
-    for (ledLevel;ledLevel < 255;ledLevel = ledLevel + 21){
-      analogWrite(ledPin,ledLevel);
-      delay(50);
+    if(brightness != 255)
+    {
+      brightness = 0;
+      for(brightness = 0; brightness <= 255; brightness += 5)
+      {
+        analogWrite(led,brightness);
+        delay(50);
+      }
+      brightness = 255;
+      analogWrite(led,brightness);
     }
   }
   else
   {
-
-    
-    for (ledLevel;ledLevel >= 0;ledLevel = ledLevel - 21){
-      analogWrite(ledPin,ledLevel);
-      delay(50);
-    }
-  }*/
-  if (val > 500)
-  {
-    if (ledLevel >= 0) 
-    {
-      while(ledLevel <= 255)
-      {
-        ledLevel += 5;
-        analogWrite(ledPin,ledLevel);
-        delay(50);
-      }
-    }
-    //ledLevel = 255;
+    brightness = 0;
+    analogWrite(led,brightness);
   }
-  else{
-    
-    //if (ledLevel <= 255) 
-    //{
-      while(ledLevel >= 0)
-      {
-        ledLevel -= 5;
-        analogWrite(ledPin,ledLevel);
-        delay(50);
-      }
-   // }
-    //ledLevel = 0;
-  }
+  delay(1000);
 }
-  
